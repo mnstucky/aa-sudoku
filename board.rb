@@ -33,6 +33,16 @@ class Board
         end
     end
 
+    def render
+        system('clear')
+        @board.each do |row|
+            row.each do |tile|
+                print tile.value.to_s + " "
+            end
+            puts
+        end
+    end
+    
     def is_solved?
         @board.each do |row|
             nums = []
