@@ -34,29 +34,29 @@ class Board
     end
 
     def is_solved?
-        row_solved = true
-        column_solved = true
         @board.each do |row|
-            row_sum = 0
-            row.each { |tile| row_sum += tile.value }
-            unless row_sum == 45
-                row_solved = false
+            nums = []
+            (0..9).each { |num| nums << num }
+            row.each do |tile|
+                if nums.include?(tile.value)
+                    nums.delete(tile.value)
+                else
+                    return false
+                end
             end
         end
         (0..8).each do |idx|
-            column_sum = 0
+            nums = []
+            (0..9).each { |num| nums << num }
             @board.each do |row|
-                column_sum += row[idx].value
-            end
-            unless column_sum == 45
-                column_solved = false
+                if nums.include?(row[idx].value)
+                    nums.delete(row[idx].value)
+                else
+                    return false
+                end
             end
         end
-        if row_solved == true && column_solved == true
-            return true
-        else
-            return false
-        end
+        true
     end
 
     def edit_tile(tile, value)
