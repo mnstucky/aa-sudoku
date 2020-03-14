@@ -1,6 +1,3 @@
-require 'byebug'
-require_relative './tile.rb'
-
 class Board
 
     def initialize
@@ -46,7 +43,7 @@ class Board
     def is_solved?
         @board.each do |row|
             nums = []
-            (0..9).each { |num| nums << num }
+            (1..9).each { |num| nums << num }
             row.each do |tile|
                 if nums.include?(tile.value)
                     nums.delete(tile.value)
@@ -57,7 +54,7 @@ class Board
         end
         (0..8).each do |idx|
             nums = []
-            (0..9).each { |num| nums << num }
+            (1..9).each { |num| nums << num }
             @board.each do |row|
                 if nums.include?(row[idx].value)
                     nums.delete(row[idx].value)
@@ -69,8 +66,12 @@ class Board
         true
     end
 
+    def valid_move?(tile)
+        @board[tile[0]][tile[1]].valid_move?
+    end
+
     def edit_tile(tile, value)
-        tile.edit(value)
+        @board[tile[0]][tile[1]].edit(value)
     end
 
 end

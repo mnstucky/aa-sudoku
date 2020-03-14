@@ -12,11 +12,12 @@ attr_reader :fixed, :value
     end
 
     def edit(value)
-        if @fixed == true
-            return false
-        else
-            @value = value
-        end
+        @value = value
+    end
+
+    def valid_move?
+        return false if @fixed == true
+        true
     end
 
 end

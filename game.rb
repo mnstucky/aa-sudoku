@@ -1,29 +1,26 @@
 require_relative './board.rb'
 require_relative './tile.rb'
 
-require 'byebug'
-
 class Game
 
     def initialize
         @board = Board.new
         @position
-            # note: format after get_move is [0, 1]
         @value
-            # note: format after get_more is int
     end
 
     def play
-        @board.import_puzzle
         @board.create_tiles
-        while @board.solved == false
+        while @board.is_solved? == false
             @board.render
-
-            @board.is_solved?
+            self.get_move
+            while !@board.valid_move?(@position)
+                print "Position is fixed. Try again. "
+                self.get_move
+            end
+            @board.edit_tile(@position, @value)
         end
-        puts "You win! Would you like to play another puzzle?"
-
-        # implement a loop to allow the user to play again
+        puts "You win!"
 
     end
 
@@ -52,3 +49,6 @@ class Game
     end
 
 end
+
+g = Game.new
+g.play
