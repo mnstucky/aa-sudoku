@@ -5,6 +5,7 @@ class Board
 
     def initialize
         @board = Array.new(9) { Array.new(9) }
+        @solved = false
     end
 
     def import_puzzle
@@ -30,6 +31,36 @@ class Board
                 @board[row_idx][column_idx] = Tile.new(num)
             end
         end
+    end
+
+    def is_solved?
+        row_solved = true
+        column_solved = true
+        @board.each do |row|
+            row_sum = 0
+            row.each { |tile| row_sum += tile.value }
+            unless row_sum == 45
+                row_solved = false
+            end
+        end
+        (0..8).each do |idx|
+            column_sum = 0
+            @board.each do |row|
+                column_sum += row[idx].value
+            end
+            unless column_sum == 45
+                column_solved = false
+            end
+        end
+        if row_solved == true && column_solved == true
+            return true
+        else
+            return false
+        end
+    end
+
+    def edit_tile(tile, value)
+        tile.edit(value)
     end
 
 end
